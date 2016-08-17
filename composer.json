@@ -1,0 +1,25 @@
+{
+    "name": "bright-tech/wechat-php-sdk",
+    "description": "微信SDK php",
+    "type": "sdk",
+    "keywords": ["wechat","sdk","php"],
+    "license": "GNU GENERAL PUBLIC LICENSE",
+    "authors": [
+        {
+            "name": "BrightTech",
+            "email": "xiao.yanqi@bright-tech.cn"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "bright_tech\\wechat\\": "src/"
+        }
+    }
+}
