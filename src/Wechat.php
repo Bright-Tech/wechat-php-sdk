@@ -1,8 +1,8 @@
 <?php
 namespace bright_tech\wechat;
 
-use bright_tech\wechat\core\Http;
 use bright_tech\wechat\core\Request;
+use bright_tech\wechat\response\AccessTokenResponse;
 
 /**
  *
@@ -12,20 +12,45 @@ use bright_tech\wechat\core\Request;
 class Wechat
 {
 
+    /**
+     *
+     * @var string
+     */
     protected $wechatEndPoint = 'https://api.weixin.qq.com/cgi-bin';
 
+    /**
+     *
+     * @var string
+     */
     protected $appid = '';
 
+    /**
+     *
+     * @var string
+     */
     protected $secret = '';
 
+    /**
+     *
+     * @var unknown
+     */
     protected $request;
 
+    /**
+     *
+     * @param unknown $appid
+     * @param unknown $secret
+     */
     public function __construct($appid, $secret)
     {
         $this->appid = $appid;
         $this->secret = $secret;
     }
 
+    /**
+     *
+     * @return \bright_tech\wechat\core\Request
+     */
     public function getRequest()
     {
         if (! $this->request) {
@@ -42,11 +67,11 @@ class Wechat
     {
         $request = $this->getRequest();
         $response = $request->doGet($this->wechatEndPoint . '/token', [
-            'grant_type' => 'client_credential',
+            'grant_type' => '',
             'appid' => $this->appid,
             'secret' => $this->secret
         ]);
-        return $response;
+        return new AccessTokenResponse($response);
     }
 }
 
