@@ -11,13 +11,14 @@ class Request
 
     /**
      *
-     * @var unknown
+     * @var Http
      */
     protected $sender;
 
+
     /**
      *
-     * @return \bright_tech\wechat\core\unknown
+     * @return Http
      */
     public function getSender()
     {
@@ -29,8 +30,10 @@ class Request
 
     /**
      *
-     * @param unknown $url
-     * @param unknown $params
+     * @param string $url
+     * @param array $params
+     *
+     * @return string
      */
     public function doGet($url, $params)
     {
@@ -40,8 +43,8 @@ class Request
 
     /**
      *
-     * @param unknown $url
-     * @param unknown $params
+     * @param string $url
+     * @param array $params
      * @return string
      */
     protected function generateGetUrl($url, $params)

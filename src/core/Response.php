@@ -13,19 +13,19 @@ abstract class Response
 
     /**
      *
-     * @var unknown
+     * @var string
      */
     public $response;
 
     /**
      *
-     * @var unknown
+     * @var array
      */
     public $convertedResponse;
 
     /**
      *
-     * @param unknown $jsonString
+     * @param string $jsonString
      */
     public function __construct($jsonString)
     {

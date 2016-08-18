@@ -10,6 +10,15 @@ class Http
 
     public $config = [];
 
+    /**
+     * @param $method
+     * @param $uri
+     * @param array $headers
+     * @param string $body
+     * @param float $httpVersion
+     * @return mixed
+     * @throws \Exception
+     */
     public function write($method, $uri, $headers = [], $body = '', $httpVersion = 1.1)
     {
         $curlHandle = curl_init();

@@ -16,7 +16,7 @@ class Wechat
      *
      * @var string
      */
-    protected $wechatEndPoint = 'https://api.weixin.qq.com/cgi-bin';
+    protected $wechatEndPoint = 'https://api.weixin.qq.com';
 
     /**
      *
@@ -32,14 +32,14 @@ class Wechat
 
     /**
      *
-     * @var unknown
+     * @var Request
      */
     protected $request;
 
     /**
      *
-     * @param unknown $appid
-     * @param unknown $secret
+     * @param string $appid
+     * @param string $secret
      */
     public function __construct($appid, $secret)
     {
@@ -66,7 +66,20 @@ class Wechat
     public function getAccessToken()
     {
         $request = $this->getRequest();
-        $response = $request->doGet($this->wechatEndPoint . '/token', [
+        $response = $request->doGet($this->wechatEndPoint . '/cgi-bin/token', [
+            'grant_type' => '',
+            'appid' => $this->appid,
+            'secret' => $this->secret
+        ]);
+        return new AccessTokenResponse($response);
+    }
+
+    /**
+     * 网页授权access_token
+     */
+    public function getWebAuthAccessToken(){
+        $request = $this->getRequest();
+        $response = $request->doGet($this->wechatEndPoint . '/sns/oauth2/access_token', [
             'grant_type' => '',
             'appid' => $this->appid,
             'secret' => $this->secret
