@@ -3,6 +3,7 @@ namespace bright_tech\wechat;
 
 use bright_tech\wechat\core\Request;
 use bright_tech\wechat\response\AccessTokenResponse;
+use bright_tech\wechat\response\WebAuthAccessTokenResponse;
 
 /**
  *
@@ -53,15 +54,15 @@ class Wechat
      */
     public function getRequest()
     {
-        if (! $this->request) {
+        if (!$this->request) {
             $this->request = new Request();
         }
         return $this->request;
     }
 
+
     /**
-     *
-     * @return mixed
+     * @return AccessTokenResponse
      */
     public function getAccessToken()
     {
@@ -74,17 +75,26 @@ class Wechat
         return new AccessTokenResponse($response);
     }
 
+
     /**
-     * 网页授权access_token
+     * 通过code换取网页授权access_token
+     *
+     * 这里通过code换取的是一个特殊的网页授权access_token,与基础支持中的access_token（该access_token用于调用其他接口）不同。
+     * 如果网页授权的作用域为snsapi_base，则本方法中获取到网页授权access_token的同时，也获取到了openid，snsapi_base式的网页授权流程即到此为止。
+     *
+     * @param string $code
+     * @return WebAuthAccessTokenResponse
      */
-    public function getWebAuthAccessToken(){
+    public function getWebAuthAccessToken($code)
+    {
         $request = $this->getRequest();
         $response = $request->doGet($this->wechatEndPoint . '/sns/oauth2/access_token', [
             'grant_type' => '',
             'appid' => $this->appid,
-            'secret' => $this->secret
+            'secret' => $this->secret,
+            'code' => $code
         ]);
-        return new AccessTokenResponse($response);
+        return new WebAuthAccessTokenResponse($response);
     }
 }
 
