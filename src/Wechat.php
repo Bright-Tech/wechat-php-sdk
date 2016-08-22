@@ -2,6 +2,7 @@
 namespace bright_tech\wechat;
 
 use bright_tech\wechat\core\Request;
+use bright_tech\wechat\models\TemplateMessage;
 use bright_tech\wechat\response\AccessTokenResponse;
 use bright_tech\wechat\response\WebAuthAccessTokenResponse;
 
@@ -85,7 +86,7 @@ class Wechat
      * @param string $code
      * @return WebAuthAccessTokenResponse
      */
-    public function getWebAuthAccessToken($code)
+    public function getAuthAccessToken($code)
     {
         $request = $this->getRequest();
         $response = $request->doGet($this->wechatEndPoint . '/sns/oauth2/access_token', [
@@ -94,6 +95,13 @@ class Wechat
             'secret' => $this->secret,
             'code' => $code
         ]);
+        return new WebAuthAccessTokenResponse($response);
+    }
+
+    public function sendTemplateMessage($accessToken, TemplateMessage $templateMessage)
+    {
+        $request = $this->getRequest();
+        $response = $request->doPost($this->wechatEndPoint . '/message/template/send?access_token=' . $accessToken, $templateMessage);
         return new WebAuthAccessTokenResponse($response);
     }
 }

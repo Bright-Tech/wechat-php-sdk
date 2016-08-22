@@ -1,5 +1,6 @@
 <?php
 namespace bright_tech\wechat\core;
+use bright_tech\wechat\models\Model;
 
 /**
  *
@@ -22,7 +23,7 @@ class Request
      */
     public function getSender()
     {
-        if (! $this->sender) {
+        if (!$this->sender) {
             $this->sender = new Http();
         }
         return $this->sender;
@@ -39,6 +40,19 @@ class Request
     {
         $sender = $this->getSender();
         return $sender->write('GET', $this->generateGetUrl($url, $params));
+    }
+
+    /**
+     *
+     * @param string $url
+     * @param Model $model
+     *
+     * @return string
+     */
+    public function doPost($url, Model $model)
+    {
+        $sender = $this->getSender();
+        return $sender->write('POST', $url, [], $model->toJson());
     }
 
     /**
