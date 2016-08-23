@@ -3,7 +3,7 @@ namespace bright_tech\wechat\response;
 
 use bright_tech\wechat\core\Response;
 
-class WebAuthAccessTokenResponse extends Response
+class OAuthAccessTokenResponse extends Response
 {
 
     public $accessToken;

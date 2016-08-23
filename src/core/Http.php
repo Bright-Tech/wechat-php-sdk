@@ -22,7 +22,7 @@ class Http
     public function write($method, $uri, $headers = [], $body = '', $httpVersion = 1.1)
     {
         $curlHandle = curl_init();
-        
+
         // set URL
         curl_setopt($curlHandle, CURLOPT_URL, $uri);
         // ensure correct curl call
@@ -43,11 +43,11 @@ class Http
                 if (isset($this->config['curloptions'][CURLOPT_INFILE])) {
                     // Now we will probably already have Content-Length set, so that we have to delete it
                     // from $headers at this point:
-                    if (! isset($headers['Content-Length']) && ! isset($this->config['curloptions'][CURLOPT_INFILESIZE])) {
+                    if (!isset($headers['Content-Length']) && !isset($this->config['curloptions'][CURLOPT_INFILESIZE])) {
                         throw new AdapterException\RuntimeException('Cannot set a file-handle for cURL option CURLOPT_INFILE' . ' without also setting its size in CURLOPT_INFILESIZE.');
                     }
                     if (isset($headers['Content-Length'])) {
-                        $this->config['curloptions'][CURLOPT_INFILESIZE] = (int) $headers['Content-Length'];
+                        $this->config['curloptions'][CURLOPT_INFILESIZE] = (int)$headers['Content-Length'];
                         unset($headers['Content-Length']);
                     }
                     if (is_resource($body)) {
@@ -113,7 +113,7 @@ class Http
             unset($headers['Authorization']);
         }
         // set additional headers
-        if (! isset($headers['Accept'])) {
+        if (!isset($headers['Accept'])) {
             $headers['Accept'] = '';
         }
         $curlHeaders = [];
@@ -145,8 +145,8 @@ class Http
         }
         // set additional curl options
         if (isset($this->config['curloptions'])) {
-            foreach ((array) $this->config['curloptions'] as $k => $v) {
-                if (! in_array($k, $this->invalidOverwritableCurlOptions)) {
+            foreach ((array)$this->config['curloptions'] as $k => $v) {
+                if (!in_array($k, $this->invalidOverwritableCurlOptions)) {
                     if (curl_setopt($curlHandle, $k, $v) == false) {
                         throw new AdapterException\RuntimeException(sprintf('Unknown or erroreous cURL option "%s" set', $k));
                     }
@@ -156,15 +156,15 @@ class Http
         // send the request
         $response = curl_exec($curlHandle);
         // if we used streaming, headers are already there
-        if (! is_resource($this->outputStream)) {
+        if (!is_resource($this->outputStream)) {
             $this->response = $response;
         }
         $request = curl_getinfo($curlHandle, CURLINFO_HEADER_OUT);
         $request .= $body;
         if (empty($this->response)) {
-            throw new AdapterException\RuntimeException("Error in cURL request: " . curl_error($curlHandle));
+            throw new \Exception("Error in cURL request: " . curl_error($curlHandle));
         }
-        
+
         curl_close($curlHandle);
         return $response;
     }

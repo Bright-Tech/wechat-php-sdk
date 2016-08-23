@@ -40,10 +40,10 @@ class TemplateMessage extends Model
     public function toJson()
     {
         $arr = [
-            'touser' => $touser,
-            'template_id' => $templateId,
-            'url'=> $url,
-            'data' => $data
+            'touser' => $this->touser,
+            'template_id' => $this->templateId,
+            'url' => $this->url,
+            'data' => $this->data
         ];
         return json_encode($arr);
     }

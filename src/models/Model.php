@@ -2,12 +2,12 @@
 namespace bright_tech\wechat\models;
 
 /**
- * Created by PhpStorm.
- * User: SamXiao
+ *
+ * @author SamXiao
  * Date: 16/8/22
  * Time: 上午9:59
  */
-class Model implements JsonableInterface
+abstract class Model implements JsonableInterface
 {
 
 }

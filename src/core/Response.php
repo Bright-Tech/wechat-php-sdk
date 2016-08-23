@@ -1,7 +1,6 @@
 <?php
 namespace bright_tech\wechat\core;
 
-use function GuzzleHttp\json_encode;
 
 /**
  *
@@ -15,13 +14,13 @@ abstract class Response
      *
      * @var string
      */
-    public $response;
+    protected $response;
 
     /**
      *
      * @var array
      */
-    public $convertedResponse;
+    protected $convertedResponse;
 
     /**
      *
@@ -47,10 +46,8 @@ abstract class Response
     public function checkError()
     {
         $jsonArr = $this->convertedResponse;
-        if (isset($jsonArr['errcode'])) {
+        if (isset($jsonArr['errcode']) && $jsonArr['errcode'] > 0) {
             throw new \Exception('Error(#' . $jsonArr['errcode'] . '): ' . $jsonArr['errmsg']);
-        } else {
-            throw new \Exception('出错了:' . json_encode($jsonArr));
         }
         return true;
     }
