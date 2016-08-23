@@ -46,6 +46,9 @@ class Wechat
      */
     public function __construct($appid, $secret)
     {
+        if(empty($appid) || empty($secret)){
+            throw new \Exception('微信AppId和Secret不能为空');
+        }
         $this->appid = $appid;
         $this->secret = $secret;
     }

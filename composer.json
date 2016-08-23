@@ -10,11 +10,8 @@
             "email": "xiao.yanqi@bright-tech.cn"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0"
-    },
-    "require-dev": {
+        "php": ">=5.4.0",
         "codeception/codeception": "^2.2"
     },
     "autoload": {
