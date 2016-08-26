@@ -125,7 +125,7 @@ class Wechat
      * @param Qrcode $qrcode
      * @return CreateQrcodeResponse
      */
-    public function createQrCode($accessToken, Qrcode $qrcode{
+    public function createQrCode($accessToken, Qrcode $qrcode){
         $request = $this->getRequest();
         $response = $request->doPost($this->wechatEndPoint . '/cgi-bin/qrcode/create?access_token=' . $accessToken, $qrcode);
         return new CreateQrcodeResponse($response);

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../autoload.php';
 use bright_tech\wechat\Wechat;
 
 
-$wechat = new Wechat('', '');
+$wechat = new Wechat('wxca0c30dff2f7c909', '3a872608bc54b6ff4ab1c3118ad4e9cc');
 
 try {
     $result = $wechat->getAccessToken();

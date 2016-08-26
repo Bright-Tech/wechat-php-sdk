@@ -3,7 +3,7 @@
 
 use bright_tech\wechat\Wechat;
 
-class MessageTest extends \Codeception\Test\Unit
+class WechatTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -20,7 +20,7 @@ class MessageTest extends \Codeception\Test\Unit
     public function getWechatClient()
     {
         if (!$this->wechat) {
-            $this->wechat = new Wechat('wx3eae1258010cfa23', '9a880e160b566c145cf56815dd4f4910');
+            $this->wechat = new Wechat('wxca0c30dff2f7c909', '3a872608bc54b6ff4ab1c3118ad4e9cc');
         }
         return $this->wechat;
     }
@@ -29,6 +29,7 @@ class MessageTest extends \Codeception\Test\Unit
     {
         if (!$this->accessToken || $this->expired > time()) {
             $response = $this->getWechatClient()->getAccessToken();
+            $this->assertNotEmpty($response->accessToken, 'getAccessToken 失败');
             $this->accessToken = $response->accessToken;
             $this->expired = time() + $response->expiresIn;
         }
@@ -51,6 +52,7 @@ class MessageTest extends \Codeception\Test\Unit
     // tests
     public function testMessage()
     {
+        $this->assertNotEmpty(null);
         $wechat = $this->getWechatClient();
         $model = new \bright_tech\wechat\models\TemplateMessage();
         $model->templateId = 'KCmuZWBsCrbJxZFAHDntO7OmBxezyUGQXEhXPtsorOo';
@@ -63,7 +65,23 @@ class MessageTest extends \Codeception\Test\Unit
             'keyword4' => '广告人',
         ];
         $response = $wechat->sendTemplateMessage($this->getAccessToken(), $model);
-        print_r($response);
         $this->assertNotEmpty($response->msgid);
+    }
+
+    public function testGetQrcode()
+    {
+        $wechat = $this->getWechatClient();
+        $model = new \bright_tech\wechat\models\Qrcode();
+        $model->expireSeconds = 1800;
+        $model->actionName = 'QR_SCENE';
+        $model->actionInfo = [
+            'scene' =>
+                [
+                    'scene_id' => 123
+                ]
+        ];
+        $response = $wechat->createQrCode($this->getAccessToken(), $model);
+        $this->assertNotEmpty($response->url);
+        codecept_debug('QrCode Ticket: ' . $response->ticket);
     }
 }
