@@ -2,8 +2,10 @@
 namespace bright_tech\wechat;
 
 use bright_tech\wechat\core\Request;
+use bright_tech\wechat\models\Qrcode;
 use bright_tech\wechat\models\TemplateMessage;
 use bright_tech\wechat\response\AccessTokenResponse;
+use bright_tech\wechat\response\CreateQrcodeResponse;
 use bright_tech\wechat\response\OAuthAccessTokenResponse;
 use bright_tech\wechat\response\SendTemplateMessageResponse;
 
@@ -114,6 +116,19 @@ class Wechat
         $request = $this->getRequest();
         $response = $request->doPost($this->wechatEndPoint . '/cgi-bin/message/template/send?access_token=' . $accessToken, $templateMessage);
         return new SendTemplateMessageResponse($response);
+    }
+
+    /**
+     * 生成带参数的二维码 - 创建二维码ticket
+     *
+     * @param $accessToken
+     * @param Qrcode $qrcode
+     * @return CreateQrcodeResponse
+     */
+    public function createQrCode($accessToken, Qrcode $qrcode{
+        $request = $this->getRequest();
+        $response = $request->doPost($this->wechatEndPoint . '/cgi-bin/qrcode/create?access_token=' . $accessToken, $qrcode);
+        return new CreateQrcodeResponse($response);
     }
 }
 
